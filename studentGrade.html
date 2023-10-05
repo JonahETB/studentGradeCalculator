@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Grade Calculator</title>
+        <style>
+            body {
+                background-color: #222222;
+                color: rgb(255, 139, 43);
+            }
+        </style>
+    </head>
+    <body>
+        <script>
+            let studentN = 0;
+            let students = 0;
+
+            firstWrite();
+
+            function firstWrite() {
+                document.write(`<label for="text">The largest class possible is 30 <br></label>`);
+                document.write(`<label for="text">how many student would you like to have  </label>`);
+                document.write(`<input type="text" id= ${students} name="grade"><br><br>`);
+                document.write(`<br><input type="submit" onclick="studentChecker()">`);
+            }
+
+            function studentChecker() {
+                studentN = +(document.getElementById(students).value);
+                if (studentN > 0 && studentN <= 30 && !!studentN) {
+                    alert("You have " + studentN + " students in your class.");
+                    createGradeInputs(studentN);
+                } else {
+                    alert("Please enter a valid number of students between 0 and 30.");
+                    location.reload();
+                }    
+            }
+            
+
+            function createGradeInputs() {
+                let form = document.createElement("form");
+                document.body.appendChild(form);
+                for(let i = 0; i < studentN; i++) {
+                    let textForGrade = "Grade for Student " + (i + 1) + " ";
+                    let gradeId = "grade" + i;
+
+                    document.write(`<label for="grade">${textForGrade}</label>`);
+                    if(i % 3 == 0 || i % 3 == 1){
+                        document.write(`<input type="text" id="${gradeId}" name="${gradeId}"> ${'&nbsp;'.repeat(10)}`);
+                    } else {
+                        document.write(`<input type="text" id="${gradeId}" name="${gradeId}"><br><br>`);
+                    }
+                }
+                document.write(`<br><input type="submit" onclick="writeGrade()">`);
+            }
+
+            function writeGrade() {
+                let sum = 0;
+                for(let i = 0; i < studentN; i++) {
+                    let gradeId = "grade" + i;
+                    let value = +(document.getElementById(gradeId).value);
+                    if (value <= 100 && value > 0 && !!value) {
+                        sum += value;
+                    } else {
+                        alert(`Student ${i + 1} has an improper grade. Grades must be numbers between 0 and 100.`);
+                        return;
+                    }
+                }
+                if (sum <= 100 && sum > 0 && !!sum) {
+                    let average = sum / studentN;
+                    document.write("<br><br><p>The class average was " + average.toFixed(2) + "</p>");
+                }
+            }
+        </script>
+    </body>
+</html>
